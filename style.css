@@ -1,4 +1,31 @@
 body {
-    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family:'Times New Roman', Times, serif;
     background-color: rgb(255, 255, 255);
+    text-align: center;
+    padding-top: 100px;
+}
+
+h1#title {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 100px;
+}
+
+.container {
+    background: #d40505;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+
+select, button {
+    padding: 10px;
+    margin: 10px;
+    font-size: 16px;
+}
+
+#timerDisplay {
+    font-size: 48px;
+    margin-top: 30px;
+    color: #000000;
 }

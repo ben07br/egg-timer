@@ -5,6 +5,18 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>Hello testing</h1>
+    <div class="container">
+        <h1 id="title">Egg Timer</h1>
+        <label for="eggType">Choose Egg Type:</label>
+        <select id="eggType">
+            <option value="360">Soft-Boiled (6 min)</option>
+            <option value="480">Medium-Boiled (8 min)</option>
+            <option value="600">Hard-Boiled (10 min)</option>
+        </select>
+        <button id="startBtn">Start Timer</button>
+        <h2 id="timerDisplay">00:00</h2>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
