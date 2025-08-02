@@ -1,22 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Egg Timer | Timer for the type of eggs you want!</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Egg Timer</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" />
 </head>
 <body>
-    <div class="container">
-        <h1 id="title">Egg Timer</h1>
-        <label for="eggType">Choose Egg Type:</label>
-        <select id="eggType">
-            <option value="360">Soft-Boiled (6 min)</option>
-            <option value="480">Medium-Boiled (8 min)</option>
-            <option value="600">Hard-Boiled (10 min)</option>
-        </select>
-        <button id="startBtn">Start Timer</button>
-        <h2 id="timerDisplay">00:00</h2>
+  <div class="title-bar">
+    <div class="title-text"><strong>Egg Timer!!</strong></div>
+    <div class="title-buttons">
+      <button id="minimize">🗕</button>
+      <button id="close">✕</button>
+    </div>
+  </div>
+
+  <div id="app">
+    <!-- Screen 1: Intro -->
+    <div class="screen" id="screen-intro">
+      <h1>Choose Egg</h1>
+      <div class="egg-viewer">
+        <button class="arrow" id="left-intro">⬅</button>
+        <img id="intro-egg-img" src="images/softEgg.png" alt="Soft Egg" />
+        <button class="arrow" id="right-intro">➡</button>
+      </div>
+      <h2 id="intro-egg-name">Soft-Boiled</h2>
+      <p id="intro-egg-desc">A soft and gooey yolk, perfect for dipping toast.</p>
+      <button id="btn-select"><strong>Select</strong></button>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Screen 2: Instructions -->
+    <div class="screen hidden" id="screen-instructions">
+      <button class="btn-back">← Back</button>
+      <div class="egg-viewer">
+        <button class="arrow" id="left-instructions">⬅</button>
+        <img id="instruction-egg-img" src="images/softEgg.png" alt="Soft Egg" />
+        <button class="arrow" id="right-instructions">➡</button>
+      </div>
+      <h2 id="instruction-egg-name">Soft-Boiled</h2>
+      <p id="egg-instructions">Place egg in boiling water for 6 minutes. Rinse under cold water.</p>
+      <button id="btn-begin">Begin Timer</button>
+    </div>
+
+    <!-- Screen 3: Timer -->
+    <div class="screen hidden" id="screen-timer">
+      <button class="btn-back">← Back</button>
+      <div class="egg-viewer">
+        <h2 id="timer-egg-name">Soft-Boiled</h2>
+      </div>
+      <h1 id="countdown">00:00</h1>
+      <button id="btn-startstop">Start</button>
+    </div>
+
+    <!-- Screen 4: Finished -->
+    <div class="screen hidden" id="screen-finished">
+      <h1>Done! 🥚</h1>
+      <img src="images/softEgg.png" id="finished-egg-img" alt="Finished Egg" />
+      <p>Your egg is finished!</p>
+      <p style="opacity: 0.5; font-size: 12px;">Tap anywhere to continue...</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('minimize').addEventListener('click', () => window.api.minimize());
+    document.getElementById('close').addEventListener('click', () => window.api.close());
+  </script>
 </body>
 </html>
