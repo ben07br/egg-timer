@@ -1,15 +1,18 @@
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 
+let win;
+
 function createWindow() {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 420,
     height: 560,
     resizable: false,
     frame: false,
     autoHideMenuBar: true,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
+      contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
     },
   });
@@ -30,4 +33,10 @@ ipcMain.on('minimize', (event) => {
 });
 ipcMain.on('close', (event) => {
   BrowserWindow.getFocusedWindow().close();
+});
+ipcMain.on('timer-finished', () => {
+  if (win) {
+    win.show();
+    win.focus();
+  }
 });

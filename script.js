@@ -3,7 +3,7 @@ const eggs = [
     name: "Soft-Boiled",
     desc: "A soft and gooey yolk, perfect for dipping toast.",
     instructions: "Place egg in boiling water for 6 minutes. Rinse under cold water.",
-    time: 360,
+    time: 360,    //360
     img: "images/softEgg.png"
   },
   {
@@ -27,13 +27,6 @@ let timer = null;
 let timeLeft = 0;
 
 // DOM elements
-const screens = {
-  intro: document.getElementById("screen-intro"),
-  instructions: document.getElementById("screen-instructions"),
-  timer: document.getElementById("screen-timer"),
-  finished: document.getElementById("screen-finished")
-};
-
 const introImg = document.getElementById("intro-egg-img");
 const introName = document.getElementById("intro-egg-name");
 const introDesc = document.getElementById("intro-egg-desc");
@@ -66,7 +59,7 @@ function updateEggView() {
 
 // Screen switcher
 function showScreen(screenId) {
-  document.querySelectorAll('screen').forEach(screen => {
+  document.querySelectorAll('.screen').forEach(screen => {
     screen.className = 'screen hidden';  // hide all
   });
 
@@ -86,23 +79,30 @@ function formatTime(sec) {
 
 function startTimer() {
   timeLeft = eggs[currentIndex].time;
+  startStopBtn.textContent = "Reset";
+
+  timeLeft--;
   countdown.textContent = formatTime(timeLeft);
-  startStopBtn.textContent = "Stop";
 
   timer = setInterval(() => {
     timeLeft--;
     countdown.textContent = formatTime(timeLeft);
     if (timeLeft <= 0) {
       clearInterval(timer);
-      showScreen("finished");
+      showScreen("screen-finished");
+      if (window.api && window.api.notifyFinished) {
+        window.api.notifyFinished();
+      }      
     }
   }, 1000);
 }
 
 function stopTimer() {
-  clearInterval(timer);
   startStopBtn.textContent = "Start";
+  clearInterval(timer);
   timer = null;
+  timeLeft = eggs[currentIndex].time;
+  countdown.textContent = formatTime(timeLeft);
 }
 
 function toggleTimer() {
@@ -113,8 +113,8 @@ function toggleTimer() {
   }
 }
 
-// Arrows
-["intro", "instructions", "timer"].forEach(screen => {
+// arrow logic
+["intro", "instructions"].forEach(screen => {
   document.getElementById(`left-${screen}`).onclick = () => {
     currentIndex = (currentIndex - 1 + eggs.length) % eggs.length;
     updateEggView();
@@ -125,26 +125,47 @@ function toggleTimer() {
   };
 });
 
-// Buttons
-
+//buttons logic
 document.getElementById("btn-select").onclick = () => {
-  showScreen("instructions");
+  showScreen("screen-instructions");
 };
 
 document.getElementById("btn-back").onclick = () => {
-  showScreen("intro");
+  showScreen("screen-intro");
+};
+
+document.getElementById("btn-back-2").onclick = () => {
+  showScreen("screen-instructions");
+  stopTimer();
 };
 
 document.getElementById("btn-begin").onclick = () => {
-  showScreen("timer");
-  countdown.textContent = formatTime(eggs[currentIndex].time);
-  startStopBtn.textContent = "Start";
+  showScreen("screen-timer");
+  stopTimer();
 };
 
 startStopBtn.onclick = toggleTimer;
 
-screens.finished.onclick = () => {
-  showScreen("intro");
+document.getElementById("screen-finished").onclick = () => {
+  showScreen("screen-intro");
 };
 
 updateEggView();
+
+function addWobbleAnimation(element) {
+  element.classList.add("pixel-wobble");
+  setTimeout(() => element.classList.remove("pixel-wobble"), 300);
+}
+
+const handleIntroClick = () => {
+  currentIndex = (currentIndex + 1) % eggs.length;
+  updateEggView();
+  addWobbleAnimation(introImg);
+  addWobbleAnimation(instructionImg);
+};
+
+document.getElementById('left-intro').onclick = handleIntroClick;
+document.getElementById('left-instructions').onclick = handleIntroClick;
+document.getElementById('right-intro').onclick = handleIntroClick;
+document.getElementById('right-instructions').onclick = handleIntroClick;
+

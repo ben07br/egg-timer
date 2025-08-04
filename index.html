@@ -11,7 +11,7 @@
   <div class="title-bar">
     <div class="title-text"><strong>Egg Timer!!</strong></div>
     <div class="title-buttons">
-      <button id="minimize">🗕</button>
+      <button id="minimize">_</button>
       <button id="close">✕</button>
     </div>
   </div>
@@ -32,7 +32,7 @@
 
     <!-- Screen 2: Instructions -->
     <div class="screen hidden" id="screen-instructions">
-      <button class="btn-back">← Back</button>
+      <button class="back-button" id="btn-back">← Back</button>
       <div class="egg-viewer">
         <button class="arrow" id="left-instructions">⬅</button>
         <img id="instruction-egg-img" src="images/softEgg.png" alt="Soft Egg" />
@@ -45,18 +45,18 @@
 
     <!-- Screen 3: Timer -->
     <div class="screen hidden" id="screen-timer">
-      <button class="btn-back">← Back</button>
+      <button class="back-button" id="btn-back-2">← Back</button>
       <div class="egg-viewer">
         <h2 id="timer-egg-name">Soft-Boiled</h2>
       </div>
       <h1 id="countdown">00:00</h1>
-      <button id="btn-startstop">Start</button>
+      <button class="start-btn" id="btn-startstop">Start</button>
     </div>
 
     <!-- Screen 4: Finished -->
     <div class="screen hidden" id="screen-finished">
-      <h1>Done! 🥚</h1>
-      <img src="images/softEgg.png" id="finished-egg-img" alt="Finished Egg" />
+      <h1>Done!</h1>
+      <img src="images/softEgg.png" class = "up-down" id="finished-egg-img" alt="Finished Egg" />
       <p>Your egg is finished!</p>
       <p style="opacity: 0.5; font-size: 12px;">Tap anywhere to continue...</p>
     </div>
