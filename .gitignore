@@ -4,6 +4,7 @@ dist/
 *.zip
 .DS_Store
 
+EggTimer-darwin-x64/
 EggTimer-darwin-arm64/
 EggTimer.app
 *.app
