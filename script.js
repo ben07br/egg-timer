@@ -1,4 +1,4 @@
-const eggs = [
+const eggs = [    //egg objects 
   {
     name: "Soft-Boiled",
     desc: "A soft and gooey yolk, perfect for dipping toast.",
@@ -41,6 +41,13 @@ const startStopBtn = document.getElementById("btn-startstop");
 
 const finishedImg = document.getElementById("finished-egg-img");
 
+const alarmSound = new Audio('sounds/rooster-sound.mp3');
+const buttonSound = new Audio('sounds/button-sound.mp3');
+const menuSound = new Audio('sounds/menu-sound.mp3');
+const backSound = new Audio('sounds/back-sound.mp3');
+const timerStartSound = new Audio('sounds/timer-sound.mp3');
+const timerStopSound = new Audio('sounds/timer-stop-sound.mp3');
+
 // Update displayed egg info
 function updateEggView() {
   const egg = eggs[currentIndex];
@@ -77,6 +84,7 @@ function formatTime(sec) {
   return `${m}:${s}`;
 }
 
+// start timer function
 function startTimer() {
   timeLeft = eggs[currentIndex].time;
   startStopBtn.textContent = "Reset";
@@ -89,6 +97,8 @@ function startTimer() {
     countdown.textContent = formatTime(timeLeft);
     if (timeLeft <= 0) {
       clearInterval(timer);
+      alarmSound.play();
+      alarmSound.loop = true;
       showScreen("screen-finished");
       if (window.api && window.api.notifyFinished) {
         window.api.notifyFinished();
@@ -97,6 +107,7 @@ function startTimer() {
   }, 1000);
 }
 
+// end timer function
 function stopTimer() {
   startStopBtn.textContent = "Start";
   clearInterval(timer);
@@ -105,10 +116,16 @@ function stopTimer() {
   countdown.textContent = formatTime(timeLeft);
 }
 
+
+// start stop timer
 function toggleTimer() {
   if (timer) {
+    timerStopSound.currentTime = 0;
+    timerStopSound.play();
     stopTimer();
   } else {
+    timerStartSound.currentTime = 0;
+    timerStartSound.play();
     startTimer();
   }
 }
@@ -148,24 +165,50 @@ startStopBtn.onclick = toggleTimer;
 
 document.getElementById("screen-finished").onclick = () => {
   showScreen("screen-intro");
+  alarmSound.pause();
+  alarmSound.currentTime = 0;
 };
 
-updateEggView();
+// updateEggView();
 
-function addWobbleAnimation(element) {
+function addWobbleAnimation(element) {    //wobble effect for when scrolling egg images
   element.classList.add("pixel-wobble");
   setTimeout(() => element.classList.remove("pixel-wobble"), 300);
 }
 
-const handleIntroClick = () => {
+const handleScrollClick = () => {    // handles the scrolling through images
   currentIndex = (currentIndex + 1) % eggs.length;
   updateEggView();
   addWobbleAnimation(introImg);
   addWobbleAnimation(instructionImg);
 };
 
-document.getElementById('left-intro').onclick = handleIntroClick;
-document.getElementById('left-instructions').onclick = handleIntroClick;
-document.getElementById('right-intro').onclick = handleIntroClick;
-document.getElementById('right-instructions').onclick = handleIntroClick;
+document.getElementById('left-intro').onclick = handleScrollClick;
+document.getElementById('left-instructions').onclick = handleScrollClick;
+document.getElementById('right-intro').onclick = handleScrollClick;
+document.getElementById('right-instructions').onclick = handleScrollClick;
+
+document.getElementById('minimize').addEventListener('click', () => window.api.minimize());
+document.getElementById('close').addEventListener('click', () => window.api.close());
+
+document.querySelectorAll('.arrow').forEach(button => {
+  button.addEventListener('click', () => {
+    buttonSound.currentTime = 0; // rewind to start
+    buttonSound.play();
+  });
+});
+
+document.querySelectorAll('.next-button').forEach(button => {
+  button.addEventListener('click', () => {
+    menuSound.currentTime = 0;
+    menuSound.play();
+  });
+});
+
+document.querySelectorAll('.back-button').forEach(button => {
+  button.addEventListener('click', () => {
+    backSound.currentTime = 0;
+    backSound.play();
+  });
+});
 

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" />
 </head>
 <body>
-  <div class="title-bar">
+  <div class="title-bar"> <!--title bar, the top of app containing min and close and title-->
     <div class="title-text"><strong>Egg Timer!!</strong></div>
     <div class="title-buttons">
       <button id="minimize">_</button>
@@ -27,7 +27,7 @@
       </div>
       <h2 id="intro-egg-name">Soft-Boiled</h2>
       <p id="intro-egg-desc">A soft and gooey yolk, perfect for dipping toast.</p>
-      <button id="btn-select"><strong>Select</strong></button>
+      <button class="next-button" id="btn-select"><strong>Select</strong></button>
     </div>
 
     <!-- Screen 2: Instructions -->
@@ -40,7 +40,7 @@
       </div>
       <h2 id="instruction-egg-name">Soft-Boiled</h2>
       <p id="egg-instructions">Place egg in boiling water for 6 minutes. Rinse under cold water.</p>
-      <button id="btn-begin">Begin Timer</button>
+      <button class="next-button" id="btn-begin">Begin Timer</button>
     </div>
 
     <!-- Screen 3: Timer -->
@@ -63,9 +63,5 @@
   </div>
 
   <script src="script.js"></script>
-  <script>
-    document.getElementById('minimize').addEventListener('click', () => window.api.minimize());
-    document.getElementById('close').addEventListener('click', () => window.api.close());
-  </script>
 </body>
 </html>
