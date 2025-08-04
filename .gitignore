@@ -3,3 +3,9 @@ dist/
 *.exe
 *.zip
 .DS_Store
+
+EggTimer-darwin-arm64/
+EggTimer.app
+*.app
+*.dmg
+*.zip

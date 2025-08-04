@@ -1,17 +1,19 @@
 {
   "name": "egg-timer-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple Egg Timer desktop app.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build:mac": "electron-builder --mac",
+    "build:win": "electron-builder --win"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ben07br/egg-timer.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "ben07br",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ben07br/egg-timer/issues"
@@ -19,5 +21,20 @@
   "homepage": "https://github.com/ben07br/egg-timer#readme",
   "devDependencies": {
     "electron": "^37.2.5"
+  },
+  "build": {
+    "appId": "com.ben07br.eggtimer",
+    "productName": "EggTimer",
+    "files": [
+      "**/*",
+      "!dist",
+      "!node_modules/.cache"
+    ],
+    "mac": {
+      "target": "dmg"
+    },
+    "win": {
+      "target": "portable"
+    }
   }
 }
