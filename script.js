@@ -86,25 +86,50 @@ function formatTime(sec) {
 
 // start timer function
 function startTimer() {
-  timeLeft = eggs[currentIndex].time;
+  // timeLeft = eggs[currentIndex].time;
+  // startStopBtn.textContent = "Reset";
+
+  // timeLeft--;
+  // countdown.textContent = formatTime(timeLeft);
+
+  // timer = setInterval(() => {
+  //   timeLeft--;
+  //   countdown.textContent = formatTime(timeLeft);
+  //   if (timeLeft <= 0) {
+  //     clearInterval(timer);
+  //     alarmSound.play();
+  //     alarmSound.loop = true;
+  //     showScreen("screen-finished");
+  //     if (window.api && window.api.notifyFinished) {
+  //       window.api.notifyFinished();
+  //     }      
+  //   }
+  // }, 1000);
+
+  const totalSeconds = eggs[currentIndex].time;
+  const endTime = Date.now() + totalSeconds * 1000;
   startStopBtn.textContent = "Reset";
 
-  timeLeft--;
-  countdown.textContent = formatTime(timeLeft);
-
-  timer = setInterval(() => {
-    timeLeft--;
+  function updateTimer() {
+    const now = Date.now();
+    const timeLeftMs = endTime - now;
+    timeLeft = Math.max(0, Math.ceil(timeLeftMs / 1000));
     countdown.textContent = formatTime(timeLeft);
+
     if (timeLeft <= 0) {
       clearInterval(timer);
+      timer = null;
       alarmSound.play();
       alarmSound.loop = true;
       showScreen("screen-finished");
       if (window.api && window.api.notifyFinished) {
         window.api.notifyFinished();
-      }      
+      }
     }
-  }, 1000);
+  }
+
+  updateTimer(); // run immediately so UI updates right away
+  timer = setInterval(updateTimer, 1000);
 }
 
 // end timer function

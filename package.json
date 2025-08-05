@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/ben07br/egg-timer#readme",
   "devDependencies": {
-    "electron": "^37.2.5"
+    "electron": "^37.2.5",
+    "electron-builder": "^26.0.12"
   },
   "build": {
     "appId": "com.ben07br.eggtimer",
